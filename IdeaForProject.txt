@@ -1,0 +1,30 @@
+Idea for the online-retailer website, part of it is based on Duke List
+
+Administrator:
+1. Delete a product
+2. Delete a user
+3. Modify a product
+4. Modify user information
+5. check purchases based on user
+6. check purchases based on seller
+
+Seller:
+1. Post a product
+2. delete a product
+3. modify seller info
+4. confirm sending
+5. check balance
+6. register
+
+Buyer:
+1. Save a product to wish list
+2. Buy a product
+3. Follow/unfollow a seller
+4. Leave a comment
+5. modify buyer info
+6. Search for a product
+7. check sold product
+8. rate a product
+9. register
+10. check purchases
+11. report not receiving
