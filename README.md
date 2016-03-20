@@ -7,6 +7,7 @@ Please add all .html files and all .js files into the corresponding directories 
 ### To compile:
 1. From IntelliJ:
   * The same way you would always compile
-2.From command line:
+
+2. From command line:
   * Type command "gradle compile" while in the root directory of the project.
   * This will require some initial setup of some gradle environment variables. Directions can be found on gradle.org.
