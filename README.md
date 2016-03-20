@@ -1,5 +1,5 @@
 # DatabaseProject5200
-Please add all .html files and all .js files into the corresponding directories nder src/main/webapp.
+Please add all .html files and all .js files into the corresponding directories under src/main/webapp.
 
 ### To open project in IntelliJ:
   * Import the build.gradle file and point IntelliJ to the local Gradle location (wherever you put the directory you downloaded from gradle.org.
