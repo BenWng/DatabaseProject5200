@@ -1,6 +1,6 @@
 package project.Database;
 
-import project.Objects.Product;
+import project.Objects.ProductSelling;
 import project.Objects.User;
 
 import java.sql.*;
@@ -118,7 +118,7 @@ public class DBMS {
         return users;
     }
 
-    public List<Product> getRecentProducts(int numProducts) {
+    public List<ProductSelling> getRecentProducts(int numProducts) {
         return null;
     }
 }

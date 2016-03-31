@@ -1,69 +1,57 @@
 package project.Servlets;
 
 import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.PrintWriter;
+import java.io.IOException; 
+import java.io.PrintWriter;   
+import javax.servlet.ServletException; 
+import javax.servlet.annotation.WebServlet; 
+import javax.servlet.http.HttpServlet; 
+import javax.servlet.http.HttpServletRequest; 
+import javax.servlet.http.HttpServletResponse;   
+import org.json.simple.JSONObject; 
+import org.json.simple.parser.JSONParser; 
+import org.json.simple.parser.ParseException;   
 
-import javax.servlet.ServletException;
-import javax.servlet.annotation.WebServlet;
-import javax.servlet.http.HttpServlet;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
+@WebServlet("/user") 
 
-import project.Database.DBMS;
-import project.Objects.User;
-import org.json.simple.JSONObject;
-import org.json.simple.parser.JSONParser;
-import org.json.simple.parser.ParseException;
-import project.Serialization.Deserializer;
-import project.Serialization.Serializer;
+public class UserServlet extends HttpServlet 
+{ 
+	private static final long serialVersionUID = 1L;   
 
+	public UserServlet() 
+	{ 
+		super(); 
+	}   
 
-@WebServlet("/users")
-public class UserServlet extends HttpServlet {
-    private static final long serialVersionUID = 1L;
-    private static Serializer serializer = new Serializer();
-    private static Deserializer deserializer = new Deserializer();
-    private static DBMS dbms = new DBMS();
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException
+	{ 
+	 	StringBuffer sb = new StringBuffer(); 
 
-    public UserServlet() {
-        super();
-    }
+	 	try 
+	 	{ 
+	 	  	BufferedReader reader = request.getReader(); 
+	 	  	String line = null; 
+	 	  	while ((line = reader.readLine()) != null) 
+	 	  		{ 
+	 	  			sb.append(line); 
+	 	  		} 
+	 	 } catch (Exception e) { e.printStackTrace(); } 
 
-    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        int id = Integer.valueOf(request.getParameter("id"));
-        User user = dbms.getUserById(id);
-        JSONObject joUser = serializer.serializeUser(user);
-        response.setContentType("application/json");
-        PrintWriter out = response.getWriter();
-        out.print(joUser);
-        out.flush();
-    }
+	 	JSONParser parser = new JSONParser();
+	 	JSONObject joUser = null;
+	 	try 
+	 	{
+	 	  	joUser = (JSONObject) parser.parse(sb.toString()); 
+	 	} catch (ParseException e) { e.printStackTrace(); }
 
+	 	String user = (String) joUser.get("name");
 
-    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        StringBuffer sb = new StringBuffer();
+	 	response.setContentType("text/html"); 
 
-        try {
-            BufferedReader reader = request.getReader();
-            String line = null;
-            while ((line = reader.readLine()) != null) {
-                sb.append(line);
-            }
-        } catch (Exception e) { e.printStackTrace(); }
+	 	PrintWriter out = response.getWriter();
 
-        JSONParser parser = new JSONParser();
-        JSONObject joUser = null;
-        try {
-            joUser = (JSONObject) parser.parse(sb.toString());
-        } catch (ParseException e) { e.printStackTrace(); }
-
-        User user = deserializer.deserializeUser(joUser);
-        //Update project.project.Objects.User in database
-
-        response.setContentType("application/json");
-        PrintWriter out = response.getWriter();
-        out.print(joUser);
-        out.flush();
-    }
+	 	out.write("A new user " + user + " has been created.");
+	 	out.flush();
+	 	out.close();
+	}
 }
