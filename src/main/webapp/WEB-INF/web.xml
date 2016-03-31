@@ -18,12 +18,12 @@
 
 
     <servlet>
-        <servlet-name>ProductServlet</servlet-name>
-        <servlet-class>project.Servlets.ProductServlet</servlet-class>
+        <servlet-name>HomeServlet</servlet-name>
+        <servlet-class>project.Servlets.HomeServlet</servlet-class>
     </servlet>
 
     <servlet-mapping>
-        <servlet-name>ProductServlet</servlet-name>
+        <servlet-name>HomeServlet</servlet-name>
         <url-pattern>/products</url-pattern>
     </servlet-mapping>
 
@@ -36,6 +36,36 @@
     <servlet-mapping>
         <servlet-name>UserServlet</servlet-name>
         <url-pattern>/users</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>ShopInfoServlet</servlet-name>
+        <servlet-class>project.Servlets.ShopInfoServlet</servlet-class>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>ShopInfoServlet</servlet-name>
+        <url-pattern>/shop/info</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>ShopProductServlet</servlet-name>
+        <servlet-class>project.Servlets.ShopProductServlet</servlet-class>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>ShopProductServlet</servlet-name>
+        <url-pattern>/shop/products</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>SingleProductServlet</servlet-name>
+        <servlet-class>project.Servlets.SingleProductServlet</servlet-class>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>SingleProductServlet</servlet-name>
+        <url-pattern>/singleproduct</url-pattern>
     </servlet-mapping>
 
 </web-app>
