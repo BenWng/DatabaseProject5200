@@ -18,7 +18,7 @@ public class Deserializer {
 
     public ProductSelling deserializeProductSelling(JSONObject jsonObject) {
         return new ProductSelling((Integer) jsonObject.get("id"),
-                (Integer) jsonObject.get("sellerId"),
+                (Integer) jsonObject.get("owner"),
                 (String) jsonObject.get("name"),
                 (Double) jsonObject.get("price"),
                 (Integer) jsonObject.get("quantity"),

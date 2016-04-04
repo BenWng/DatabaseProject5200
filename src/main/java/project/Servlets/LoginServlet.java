@@ -48,16 +48,8 @@ public class LoginServlet extends HttpServlet
         String username = (String) joUser.get("name");
         String password = (String) joUser.get("password");
 
-        //* Code for DB interaciton
         User user = dbms.getUserByNameAndPassword(username, password);
         JSONObject obj = serializer.serializeUser(user);
-        //*/
-
-        /* Test code, delete when DB works
-        JSONObject obj = new JSONObject() ;
-        obj.put("name", username);
-        obj.put("id", 123);
-        //*/
 
         response.setContentType("text/html");
 

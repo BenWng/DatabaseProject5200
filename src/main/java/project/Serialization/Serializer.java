@@ -17,7 +17,7 @@ public class Serializer {
             obj.put("id", user.getId());
             obj.put("name", user.getName());
             obj.put("email", user.getEmail());
-            obj.put("shippingAddress", user.getShippingAddress());
+            //obj.put("shippingAddress", user.getShippingAddress());
             obj.put("admin", user.isAdmin());
             obj.put("seller", user.isSeller());
         } else {
@@ -41,15 +41,15 @@ public class Serializer {
         if (productSelling != null) {
             obj.put("id", productSelling.getId());
             obj.put("name", productSelling.getName());
-            obj.put("sellerId", productSelling.getSellerId());
+            obj.put("owner", productSelling.getSellerId());
             obj.put("price", productSelling.getPrice());
-            obj.put("quantity", productSelling.getQuantity());
+            //obj.put("quantity", productSelling.getQuantity());
             obj.put("description", productSelling.getShortDescription());
             obj.put("longdescription", productSelling.getFullDescription());
-            obj.put("pictureURL", productSelling.getPictureURL());
+            //obj.put("pictureURL", productSelling.getPictureURL());
             obj.put("Category", productSelling.getCategory());
         } else {
-            obj.put("error", "Null Product");
+            obj.put("id", -1);
         }
 
         return obj;
@@ -78,7 +78,7 @@ public class Serializer {
             obj.put("shipped", productSold.isShipped());
             obj.put("received", productSold.isReceived());
         } else {
-            obj.put("error", "Null Product");
+            obj.put("id", -1);
         }
 
         return obj;
@@ -97,6 +97,7 @@ public class Serializer {
         JSONObject obj = new JSONObject();
         JSONArray arr = new JSONArray();
         if (shop != null) {
+            obj.put("owner", shop.getSellerId());
             obj.put("name", shop.getName());
             for (String category : shop.getCategories()) {
                 JSONObject categoryObj = new JSONObject();
@@ -105,7 +106,7 @@ public class Serializer {
             }
             obj.put("Categories", arr);
         } else {
-            obj.put("error", "Null Shop");
+            obj.put("id", -1);
         }
 
         return obj;

@@ -30,26 +30,8 @@ public class HomeServlet extends HttpServlet
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
         throws ServletException, IOException
     {
-        //* Code for DB interaction
         List<ProductSelling> productSellingList = dbms.getRecentProducts(DEFAULT_NUM_PRODUCTS);
         JSONArray list = serializer.serializeProductsSelling(productSellingList);
-        //*/
-
-        /* Test code, delete when DB works
-        JSONObject obj = new JSONObject() ;
-        obj.put("id",589);
-        obj.put("name","Goodie1");
-        obj.put("description","description1");
-
-        JSONObject obj2 = new JSONObject() ;
-        obj2.put("id",376);
-        obj2.put("name","Goodie2");
-        obj2.put("description","description2");
-
-        JSONArray list = new JSONArray();
-        list.add(obj);
-        list.add(obj2);
-        //*/
 
         response.setContentType("text/html");
         PrintWriter out=response.getWriter();
