@@ -18,7 +18,6 @@ import project.Objects.ProductSelling;
 import project.Serialization.Serializer;
 
 
-@WebServlet("/home")
 public class HomeServlet extends HttpServlet
 {
     private static final long serialVersionUID = 2L;

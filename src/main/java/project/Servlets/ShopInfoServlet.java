@@ -21,7 +21,6 @@ import project.Objects.Shop;
 
 //The servlet returns the info (name and categories) of a shop,
 // the request contains the name of the shop
-@WebServlet("/shop/info")
 public class ShopInfoServlet extends HttpServlet
 {
     private static final long serialVersionUID = 4L;

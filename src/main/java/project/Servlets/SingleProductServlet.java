@@ -17,9 +17,7 @@ import org.json.simple.JSONArray;
 import project.Database.DBMS;
 import project.Objects.ProductSelling;
 import project.Serialization.Serializer;
-//import java.util.*;
 
-@WebServlet("/singleproduct")
 public class SingleProductServlet extends HttpServlet
 {
     private static final long serialVersionUID = 4L;

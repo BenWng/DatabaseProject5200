@@ -6,150 +6,188 @@ import java.util.List;
 import project.Objects.*;
 
 public class DBMS {
-    private static Connection conn;
 
-    public DBMS(){
-        try {
-            Class.forName("com.mysql.jdbc.Driver");
-            conn = DriverManager.getConnection("jdbc:mysql://localhost/test?" +
-                    "user=abc&password=abc");
-        } catch (Exception e) {
-            System.out.println("Cannot connect to database");
-        }
-    }
-
-    public List<ProductSelling> getRecentProducts(int numProducts)
-    {
+    public List<ProductSelling> getRecentProducts(int numProducts) {
         List<ProductSelling> products = new ArrayList<>();
-        try
-        {
+        try {
+            Connection conn = establishConnection();
             PreparedStatement st = conn.prepareStatement("Select * from ProductsSelling ps"
-                    + "where ps.id = ?");
+                    + "limit ?");
             st.setInt(1, numProducts);
             ResultSet rs = st.executeQuery();
             while(rs.next())
             {
-                ProductSelling p = populateProductSellingFromDB(rs);
+                int id =  rs.getInt(1);
+                String name =  rs.getString(2);
+                Double price =  rs.getDouble(3);
+                String shortDescription =  rs.getString(4);
+                String longDescription = rs.getString(5);
+                int sellerId = rs.getInt(6);
+                String pCategory = rs.getString(7);
+                int quantity =  rs.getInt(8);
+                String pictureURL =  rs.getString(9);
+                ProductSelling p = new ProductSelling(id,
+                        sellerId,
+                        name,
+                        price,
+                        quantity,
+                        shortDescription,
+                        longDescription,
+                        pictureURL,
+                        pCategory);
                 products.add(p);
             }
+
+            conn.close();
+        } catch(Exception e) {
+            System.out.println(e.getMessage());
         }
-        catch(Exception e)
-        {
-            System.out.println(e);
-        }
+
         return products;
     }
     
-    public User getUserByNameAndPassword(String username, String password)
-    {
-        try
-        {
+    public User getUserByNameAndPassword(String username, String password) {
+        try {
+            Connection conn = establishConnection();
             PreparedStatement st = conn.prepareStatement("Select * from User u"
-                    + "where u.username = ?"
+                    + "where u.name = ?"
                     + "AND u.password= ?");
             st.setString(1, username);
             st.setString(2, password);
             ResultSet rs = st.executeQuery();
             if(rs.next())
             {
-                return populateUserFromDB(rs);
+                int id =  rs.getInt(1);
+                String email = rs.getString(2);
+                String name = rs.getString(3);
+                String shippingAddress =  rs.getString(5);
+                boolean seller = rs.getBoolean(6);
+                boolean admin = rs.getBoolean(8);
+                return new User(id,
+                        name,
+                        email,
+                        shippingAddress,
+                        admin,
+                        seller);
             }
+
+            conn.close();
+        } catch(Exception e) {
+            System.out.println(e.getMessage());
         }
-        catch(Exception e)
-        {
-            System.out.println(e);
-        }
+
         return null;
     }
-    public List<ProductSelling> getProductsBySellerAndCategory(int sellerId, String category)
-    {
+
+    public List<ProductSelling> getProductsBySellerAndCategory(int sellerId, String category) {
         List<ProductSelling> products = new ArrayList<>();
-        try
-        {
+        try {
+            Connection conn = establishConnection();
             PreparedStatement st = conn.prepareStatement("Select * from ProductsSelling ps"
-                    + "where ps.id = ?"
+                    + "where ps.sellerId = ?"
                     + "and ps.category = ?");
             st.setInt(1, sellerId);
             st.setString(2, category);
             ResultSet rs = st.executeQuery();
             while(rs.next())
             {
-                ProductSelling p = populateProductSellingFromDB(rs);
+                int id =  rs.getInt(1);
+                String name =  rs.getString(2);
+                Double price =  rs.getDouble(3);
+                String shortDescription =  rs.getString(4);
+                String longDescription = rs.getString(5);
+                String pCategory = rs.getString(7);
+                int quantity =  rs.getInt(8);
+                String pictureURL =  rs.getString(9);
+                ProductSelling p = new ProductSelling(id,
+                        sellerId,
+                        name,
+                        price,
+                        quantity,
+                        shortDescription,
+                        longDescription,
+                        pictureURL,
+                        pCategory);
                 products.add(p);
             }
+
+            conn.close();
+        } catch(Exception e) {
+            System.out.println(e.getMessage());
         }
-        catch(Exception e)
-        {
-            System.out.println(e);
-        }
+
         return products;
     }
 
-    private ProductSelling populateProductSellingFromDB(ResultSet rs) throws SQLException {
-        int id =  rs.getInt(1);
-        int sellerId = rs.getInt(2);
-        String name =  rs.getString(3);
-        Double price =  rs.getDouble(4);
-        int quantity =  rs.getInt(5);
-        String shortDescription =  rs.getString(6);
-        String longDescription = rs.getString(7);
-        String pictureURL =  rs.getString(8);
-        String pCategory = rs.getString(9);
-        return new ProductSelling(id,
-                sellerId,
-                name,
-                price,
-                quantity,
-                shortDescription,
-                longDescription,
-                pictureURL,
-                pCategory);
-    }
-
-    private User populateUserFromDB(ResultSet rs) throws SQLException {
-        int id =  rs.getInt(1);
-        String name = rs.getString(2);
-        String email = rs.getString(3);
-        String shippingAddress =  rs.getString(4);
-        boolean admin = rs.getBoolean(5);
-        boolean seller = rs.getBoolean(6);
-        return new User(id,
-                name,
-                email,
-                shippingAddress,
-                admin,
-                seller);
-    }
-
-    public ProductSelling getProductSellingById(int productId)
-    {
-        ProductSelling p;
-        try
-        {
+    public ProductSelling getProductSellingById(int productId) {
+        try {
+            Connection conn = establishConnection();
             PreparedStatement st = conn.prepareStatement("Select * from ProductsSelling ps"
                     + "where ps.id = ?");
             st.setInt(1, productId);
             ResultSet rs = st.executeQuery();
             if(rs.next())
             {
-                return populateProductSellingFromDB(rs);
+                int id =  rs.getInt(1);
+                String name =  rs.getString(2);
+                Double price =  rs.getDouble(3);
+                String shortDescription =  rs.getString(4);
+                String longDescription = rs.getString(5);
+                int sellerId = rs.getInt(6);
+                String pCategory = rs.getString(7);
+                int quantity =  rs.getInt(8);
+                String pictureURL =  rs.getString(9);
+                return new ProductSelling(id,
+                        sellerId,
+                        name,
+                        price,
+                        quantity,
+                        shortDescription,
+                        longDescription,
+                        pictureURL,
+                        pCategory);
             }
+
+            conn.close();
+        } catch(Exception e) {
+            System.out.println(e.getMessage());
         }
-        catch(Exception e)
-        {
-            System.out.println(e);
-        }
+
         return null;
     }
 
     public Shop getShopBySellerId(int sellerId) {
-        //Stub code for testing purposes
-        String shopName = "Macy's";
-        List<String> shopCategories = new ArrayList<>();
-        shopCategories.add("Food");
-        shopCategories.add("Clothes");
+        try {
+            Connection conn = establishConnection();
+            List<String> shopCategories = new ArrayList<>();
+            String shopName = "";
+            PreparedStatement st = conn.prepareStatement("select * from Users where id = ?");
+            st.setInt(1, sellerId);
+            ResultSet rs = st.executeQuery();
+            if (rs.next()) {
+                shopName = rs.getString("shopName");
+                PreparedStatement shopSt = conn.prepareStatement("select category from ShopCategories where " +
+                        "sellerId = ?");
+                shopSt.setInt(1, sellerId);
+                ResultSet shopRS = shopSt.executeQuery();
+                while (shopRS.next()) {
+                    shopCategories.add(rs.getString(1));
+                }
 
-        return new Shop(sellerId, shopName, shopCategories);
+            }
+
+            conn.close();
+            return new Shop(sellerId, shopName, shopCategories);
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+
+        return null;
+    }
+
+    private Connection establishConnection() throws SQLException, ClassNotFoundException {
+        Class.forName("com.mysql.jdbc.Driver");
+        return DriverManager.getConnection("jdbc:mysql://localhost/test?", "abc", "abc");
     }
     /*public user get_all_users(int uid)
     {

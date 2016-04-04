@@ -21,7 +21,6 @@ import project.Serialization.Serializer;
 
 //The servlet returns all the products of a shop,
 // the request contains the name of the shop
-@WebServlet("/shop/products")
 public class ShopProductServlet extends HttpServlet
 {
     private static final long serialVersionUID = 3L;

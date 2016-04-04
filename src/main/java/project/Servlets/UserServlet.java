@@ -12,8 +12,6 @@ import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser; 
 import org.json.simple.parser.ParseException;   
 
-@WebServlet("/user") 
-
 public class UserServlet extends HttpServlet 
 { 
 	private static final long serialVersionUID = 1L;   

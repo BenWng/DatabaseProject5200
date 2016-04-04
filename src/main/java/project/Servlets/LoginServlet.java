@@ -16,7 +16,6 @@ import project.Database.DBMS;
 import project.Objects.User;
 import project.Serialization.Serializer;
 
-@WebServlet("/login")
 public class LoginServlet extends HttpServlet
 {
     private static final long serialVersionUID = 5L;
