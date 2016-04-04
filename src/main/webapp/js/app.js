@@ -1,7 +1,15 @@
 /**
- * Created by Ben_Big on 2/11/16.
+ * Created by Ben_Big on 3/24/16.
  */
-(function()
-{
-    angular.module("PageApp",[]);
-})();
+(function(){
+    var ShopApp=angular.module("ShopApp",["ngRoute"]);
+
+    /*
+     ShopApp.run(['$rootScope',function($rootScope){
+     console.log($rootScope.test);
+     }]);
+    */
+
+}());
+
+
