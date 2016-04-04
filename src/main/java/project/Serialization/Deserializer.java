@@ -11,7 +11,9 @@ public class Deserializer {
         return new User((Integer) jsonObject.get("id"),
                 (String) jsonObject.get("name"),
                 (String) jsonObject.get("email"),
-                (String) jsonObject.get("role"));
+                (String) jsonObject.get("shippingAddress"),
+                (boolean) jsonObject.get("admin"),
+                (boolean) jsonObject.get("seller"));
     }
 
     public ProductSelling deserializeProductSelling(JSONObject jsonObject) {
@@ -36,7 +38,7 @@ public class Deserializer {
                 (String) jsonObject.get("longdescription"),
                 (String) jsonObject.get("pictureURL"),
                 (String) jsonObject.get("Category"),
-                (Boolean) jsonObject.get("shippedFlag"),
-                (Boolean) jsonObject.get("receivedFlag"));
+                (Boolean) jsonObject.get("shipped"),
+                (Boolean) jsonObject.get("received"));
     }
 }

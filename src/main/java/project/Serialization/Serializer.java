@@ -20,9 +20,20 @@ public class Serializer {
         obj.put("id", user.getId());
         obj.put("name", user.getName());
         obj.put("email", user.getEmail());
-        obj.put("role", user.getRole());
+        obj.put("shippingAddress", user.getShippingAddress());
+        obj.put("admin", user.isAdmin());
+        obj.put("seller", user.isSeller());
 
         return obj;
+    }
+
+    public JSONArray serializeUserList(List<User> users) {
+        JSONArray array = new JSONArray();
+        for (User user : users) {
+            array.add(serializeUser(user));
+        }
+
+        return array;
     }
 
     public JSONObject serializeProductSelling(ProductSelling productSelling) {

@@ -41,12 +41,12 @@ public class SingleProductServlet extends HttpServlet
         }
         response.setContentType("text/html");
 
-        /* Code for DB interaction
+        //* Code for DB interaction
         ProductSelling productSelling = dbms.getProductSellingById(id);
         JSONObject obj = serializer.serializeProductSelling(productSelling);
         //*/
 
-        //* Test Code, delete when DB works
+        /* Test Code, delete when DB works
         JSONObject obj = new JSONObject();
 
         obj.put("id", id);

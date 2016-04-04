@@ -1,93 +1,98 @@
 create table Users(
-	id int primary key auto_increment,
-  Email varchar(48) not null,
-  Name varchar(48) not null,
-  ShippingAddress varchar(100),
-  SellerFlag boolean,
-  AdminFlag boolean
+  id int primary key auto_increment,
+  email varchar(48) not null,
+  name varchar(48) not null,
+  password varchar(200) not null,
+  shippingAddress varchar(100),
+  seller boolean,
+  shopName varchar(200),
+  admin boolean
 );
 
 create table CategoryType(
-	name varchar(48) primary key
+  name varchar(48) primary key
 );
 
-create table ProductSold(
-	id int primary key auto_increment,
-  Name varchar(48) not null,
-  Price boolean not null,
-  Description varchar(1000) not null,
-  SellerId int not null,
+create table ProductsSold(
+  id int primary key auto_increment,
+  name varchar(48) not null,
+  price boolean not null,
+  shortDescription varchar(1000) not null,
+  longDescription varchar(1000) not null,
+  sellerId int not null,
   foreign key (SellerId) references Users(id)
   on update cascade
   on delete no action,
-  PurchaserId int not null,
+  purchaserId int not null,
   foreign key (PurchaserId) references Users(id)
   on update cascade
   on delete no action,
-  Category varchar(48),
-  foreign key (Category) references CategoryType(name)
+  category varchar(48),
+  foreign key (category) references CategoryType(name)
   on update cascade
   on delete no action,
-  ShippedFlag boolean not null,
-  ReceivedFlag boolean not null
+  shipped boolean not null,
+  received boolean not null,
+  pictureURL varchar(255) not null
 );
 
-
-create table ProductSelling(
-	id int primary key auto_increment,
-  Name varchar(48) not null,
-  Price boolean not null,
-  Description varchar(1000) not null,
-  SellerId int not null,
-  foreign key (SellerId) references Users(id)
+create table ProductsSelling(
+  id int primary key auto_increment,
+  name varchar(48) not null,
+  price boolean not null,
+  shortDescription varchar(1000) not null,
+  longDescription varchar(1000) not null,
+  sellerId int not null,
+  foreign key (sellerId) references Users(id)
   on update cascade
   on delete no action,
-  PurchaserId int not null,
-  foreign key (PurchaserId) references Users(id)
+  category varchar(48),
+  foreign key (category) references CategoryType(name)
   on update cascade
   on delete no action,
-  Category varchar(48),
-  foreign key (Category) references CategoryType(name)
-  on update cascade
-  on delete no action,
- 	Quantity int not null
+  quantity int not null,
+  pictureURL varchar(255) not null
 );
-
-
-
 
 create table FollowedUsers(
-  FollowerID int,
-  FollowedID int,
-  primary key (FollowerID, FollowedID)
+  followerId int,
+  followedId int,
+  primary key (followerId, followedId)
   );
   
 create table PicturesSold(
-  ProductID int primary key,
-  Picture longblob,
-  foreign key (ProductID) references ProductSold(id)
+  productId int primary key,
+  picture longblob,
+  foreign key (productId) references ProductsSold(id)
   on update cascade
   on delete cascade
   );
-    
     
 create table PicturesSelling(
-  ProductID int primary key,
-  Picture longblob,
-  foreign key (ProductID) references ProductSelling(id)
+  productId int primary key,
+  picture longblob,
+  foreign key (productID) references ProductsSelling(id)
   on update cascade
   on delete cascade
   );
   
-  
 create table Wishlist(
-  UserID int not null,
-  ProductID int not null,
-  foreign key (UserID) references Users(id)
+  userId int not null,
+  productId int not null,
+  foreign key (userId) references Users(id)
   on update cascade
   on delete cascade,
-  foreign key (ProductID) references ProductSelling(id)
+  foreign key (productId) references ProductsSelling(id)
   on update cascade
   on delete cascade,
-  primary key(UserID, ProductID)
+  primary key(userId, productId)
+  );
+
+create table ShopCategories(
+  sellerId int,
+  category varchar(200),
+  foreign key(sellerId) references Users(id)
+  on update cascade
+  on delete cascade,
+  primary key(sellerId, category)
   );

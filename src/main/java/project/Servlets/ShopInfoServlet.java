@@ -41,7 +41,7 @@ public class ShopInfoServlet extends HttpServlet
             sellerId = Integer.parseInt(shopOwner);
         }
 
-        /* Code for DB interaction
+        //* Code for DB interaction
         Shop shop = dbms.getShopBySellerId(sellerId);
         JSONObject obj = serializer.serializeShop(shop);
         //*/
@@ -49,7 +49,7 @@ public class ShopInfoServlet extends HttpServlet
         response.setContentType("text/html");
 
 
-        //* Test code, delete when DB works
+        /* Test code, delete when DB works
         JSONObject obj = new JSONObject() ;
         obj.put("ShopName", "Macy's");
 

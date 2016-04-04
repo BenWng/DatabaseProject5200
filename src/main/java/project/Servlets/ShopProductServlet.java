@@ -42,7 +42,7 @@ public class ShopProductServlet extends HttpServlet
         }
         String category = request.getParameter("category");
 
-        /* Code for DB interaction
+        //* Code for DB interaction
         List<ProductSelling> productSellingList = dbms.getProductsBySellerAndCategory(sellerId, category);
         JSONArray list = serializer.serializeProductsSelling(productSellingList);
         //*/
@@ -50,7 +50,7 @@ public class ShopProductServlet extends HttpServlet
         response.setContentType("text/html");
 
 
-        //* Test code, delete when DB works
+        /* Test code, delete when DB works
         JSONArray list = new JSONArray();
 
         if (category == null) {

@@ -1,0 +1,14 @@
+insert into Users (email, name, password, shippingAddress, seller, shopName, admin) values ('test@gmail.com', 'test', 'test', '123 test st', 1, 'Macy\'s', 0);
+insert into CategoryType (name) value ('Food');
+insert into CategoryType (name) value ('Clothes');
+insert into CategoryType (name) value ('Electronics');
+insert into ShopCategories (sellerId, category) values (1, 'Food');
+insert into ShopCategories (sellerId, category) values (1, 'Clothes');
+insert into ShopCategories (sellerId, category) values (1, 'Electronics');
+insert into ProductsSelling (name, price, shortDescription, longDescription, sellerId, category, quantity, pictureURL) values ('Goodie 1', 10.99, 'Goodie 1 short description', 'Goodie 1 complete description', 1, 'Food', 1, 'path');
+insert into ProductsSelling (name, price, shortDescription, longDescription, sellerId, category, quantity, pictureURL) values ('Goodie 2', 7.99, 'Goodie 2 short description', 'Goodie 2 complete description', 1, 'Clothes', 1, 'path');
+insert into ProductsSelling (name, price, shortDescription, longDescription, sellerId, category, quantity, pictureURL) values ('Sandwich', 18, 'Sandwich short description', 'Sandwich complete description', 1, 'Food', 1, 'path');
+insert into ProductsSelling (name, price, shortDescription, longDescription, sellerId, category, quantity, pictureURL) values ('Hamburger', 18, 'Hamburger short description', 'Hamburger complete description', 1, 'Food', 1, 'path');
+insert into ProductsSelling (name, price, shortDescription, longDescription, sellerId, category, quantity, pictureURL) values ('Suit', 18, 'Suit short description', 'Suit complete description', 1, 'Clothes', 1, 'path');
+insert into ProductsSelling (name, price, shortDescription, longDescription, sellerId, category, quantity, pictureURL) values ('Dress', 18, 'Dress short description', 'Dress complete description', 1, 'Clothes', 1, 'path');
+insert into ProductsSelling (name, price, shortDescription, longDescription, sellerId, category, quantity, pictureURL) values ('iPhone', 200, 'The next big thing is here', 'Mobile Phone\'s revolution. 4 speakers, 5.5 inch, ID Touch', 1, 'Electronics', 1, 'path');
