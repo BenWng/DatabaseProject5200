@@ -4,12 +4,9 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 import project.Objects.*;
 
 public class DBMS {
-    private static Logger logger = LogManager.getLogger(DBMS.class);
     private static final String dbName = "test";
     private static final String dbConn = "jdbc:mysql://localhost/" + dbName + "?";
     private static final String dbUser = "abc";
@@ -182,7 +179,7 @@ public class DBMS {
                 shopSt.setInt(1, sellerId);
                 ResultSet shopRS = shopSt.executeQuery();
                 while (shopRS.next()) {
-                    shopCategories.add(rs.getString(1));
+                    shopCategories.add(shopRS.getString(1));
                 }
 
             }
