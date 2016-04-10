@@ -1,6 +1,6 @@
 create table Users(
   id int primary key auto_increment,
-  email varchar(48) not null,
+  email varchar(48),
   name varchar(48) not null,
   password varchar(200) not null,
   shippingAddress varchar(100),
@@ -20,20 +20,20 @@ create table ProductsSold(
   shortDescription varchar(1000) not null,
   longDescription varchar(1000) not null,
   sellerId int not null,
-  foreign key (SellerId) references Users(id)
+  foreign key (sellerId) references Users(id)
   on update cascade
   on delete no action,
   purchaserId int not null,
-  foreign key (PurchaserId) references Users(id)
+  foreign key (purchaserId) references Users(id)
   on update cascade
   on delete no action,
   category varchar(48),
   foreign key (category) references CategoryType(name)
   on update cascade
   on delete no action,
-  shipped boolean not null,
-  received boolean not null,
-  pictureURL varchar(255) not null
+  shipped boolean,
+  received boolean,
+  pictureURL varchar(255)
 );
 
 create table ProductsSelling(
@@ -50,8 +50,8 @@ create table ProductsSelling(
   foreign key (category) references CategoryType(name)
   on update cascade
   on delete no action,
-  quantity int not null,
-  pictureURL varchar(255) not null
+  quantity int,
+  pictureURL varchar(255)
 );
 
 create table FollowedUsers(
