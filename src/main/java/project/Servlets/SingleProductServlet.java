@@ -13,22 +13,22 @@ import project.Database.DBMS;
 import project.Objects.ProductSelling;
 import project.Serialization.Serializer;
 
-public class SingleProductServlet extends HttpServlet
-{
+public class SingleProductServlet extends HttpServlet {
     private static final long serialVersionUID = 4L;
     private static DBMS dbms = new DBMS();
     private static Serializer serializer = new Serializer();
 
-    public SingleProductServlet(){super();}
+    public SingleProductServlet() {
+        super();
+    }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
-        throws ServletException, IOException
-    {
+        throws ServletException, IOException {
         String productID = request.getParameter("productID");
         int id = -1;
 
-        if (productID != null |
-                !productID.isEmpty() |
+        if (productID != null ||
+                !productID.isEmpty() ||
                 StringUtils.isNumeric(productID)) {
             id = Integer.parseInt(productID);
         }
@@ -41,6 +41,5 @@ public class SingleProductServlet extends HttpServlet
         out.write(obj.toJSONString());
         out.flush();
         out.close();
-
     }
 }

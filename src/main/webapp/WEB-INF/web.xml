@@ -10,6 +10,7 @@
         <url-pattern>/login</url-pattern>
     </servlet-mapping>
 
+
     <servlet>
         <servlet-name>HomeServlet</servlet-name>
         <servlet-class>project.Servlets.HomeServlet</servlet-class>
@@ -27,7 +28,17 @@
 
     <servlet-mapping>
         <servlet-name>UserServlet</servlet-name>
-        <url-pattern>/user</url-pattern>
+        <url-pattern>/users</url-pattern>
+    </servlet-mapping>
+
+    <servlet-mapping>
+        <servlet-name>UserServlet</servlet-name>
+        <url-pattern>deleteUser/*</url-pattern>
+    </servlet-mapping>
+
+    <servlet-mapping>
+        <servlet-name>UserServlet</servlet-name>
+        <url-pattern>updateUser/*</url-pattern>
     </servlet-mapping>
 
     <servlet>
@@ -60,4 +71,73 @@
         <url-pattern>/singleproduct</url-pattern>
     </servlet-mapping>
 
+    <servlet>
+        <servlet-name>RegistrationServlet</servlet-name>
+        <servlet-class>project.Servlets.RegistrationServlet</servlet-class>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>RegistrationServlet</servlet-name>
+        <url-pattern>/registration</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>WishListServlet</servlet-name>
+        <servlet-class>project.Servlets.WishListServlet</servlet-class>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>WishListServlet</servlet-name>
+        <url-pattern>/myWishList/*</url-pattern>
+    </servlet-mapping>
+
+    <servlet-mapping>
+        <servlet-name>WishListServlet</servlet-name>
+        <url-pattern>/removeFromWishList/*</url-pattern>
+    </servlet-mapping>
+
+    <servlet-mapping>)(
+        <servlet-name>WishListServlet</servlet-name>
+        <url-pattern>/addToWishList/*</url-pattern>
+    </servlet-mapping>
+
+    <servlet-mapping>
+        <servlet-name>WishListServlet</servlet-name>
+        <url-pattern>/wishOrNot/*</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>PurchaseServlet</servlet-name>
+        <servlet-class>project.Servlets.PurchaseServlet</servlet-class>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>PurchaseServlet</servlet-name>
+        <url-pattern>/myPurchases/*</url-pattern>
+    </servlet-mapping>
+
+    <servlet-mapping>
+        <servlet-name>PurchaseServlet</servlet-name>
+        <url-pattern>/purchasedOrNot/*</url-pattern>
+    </servlet-mapping>
+
+    <servlet-mapping>
+        <servlet-name>PurchaseServlet</servlet-name>
+        <url-pattern>/purchaseProduct/*</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>ProductServlet</servlet-name>
+        <servlet-class>project.Servlets.ProductServlet</servlet-class>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>ProductServlet</servlet-name>
+        <url-pattern>/editPost/*</url-pattern>
+    </servlet-mapping>
+
+    <servlet-mapping>
+        <servlet-name>ProductServlet</servlet-name>
+        <url-pattern>/deletePost/*</url-pattern>
+    </servlet-mapping>
 </web-app>

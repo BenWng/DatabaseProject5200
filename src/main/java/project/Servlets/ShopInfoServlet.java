@@ -13,21 +13,22 @@ import project.Database.DBMS;
 import project.Serialization.Serializer;
 import project.Objects.Shop;
 
-public class ShopInfoServlet extends HttpServlet
-{
+public class ShopInfoServlet extends HttpServlet {
     private static final long serialVersionUID = 4L;
     private static DBMS dbms = new DBMS();
     private static Serializer serializer = new Serializer();
 
-    public ShopInfoServlet(){super();}
+    public ShopInfoServlet() {
+        super();
+    }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException
     {
         String shopOwner = request.getParameter("shopOwner");
         int sellerId = -1;
-        if (shopOwner != null |
-                !shopOwner.isEmpty() |
+        if (shopOwner != null ||
+                !shopOwner.isEmpty() ||
                 StringUtils.isNumeric(shopOwner)) {
             sellerId = Integer.parseInt(shopOwner);
         }
@@ -41,8 +42,5 @@ public class ShopInfoServlet extends HttpServlet
         out.write(obj.toJSONString());
         out.flush();
         out.close();
-
-
-
     }
 }

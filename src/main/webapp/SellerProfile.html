@@ -1,0 +1,78 @@
+<div id="wrapper" ng-controller="sellerController">
+
+    <!-- Page Content -->
+    <div class="container">
+
+        <div ng-include src=" './Navigation.html' "></div>
+
+        <hr>
+
+
+        <!-- Page Heading -->
+        <div class="row">
+            <div class="col-lg-12">
+                <h1 class="page-header">
+                    Products Sold
+                </h1>
+            </div>
+        </div>
+        <!-- /.row -->
+
+        <!--The Purchase list Part -->
+        <div >
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="table-responsive">
+                        <!-- The Table of the registered students-->
+                        <table  class="table table-bordred table-striped">
+
+
+                            <thead>
+                            <th class="col-xs-2">Name</th>
+                            <th class="col-xs-2">Shopper's name</th>
+                            <th class="col-xs-2">Confirm Sending</th>
+                            </thead>
+                            <tbody>
+                            <tr ng-repeat="product in mySoldProducts">
+                                <td><a href="#/app/product?productID={{product.id}}">{{product.name}}</a></td>
+                                <td>{{product.shopperName}}</td>
+                                <td>
+                                    <div ng-show="!product.shipStatus">
+                                        <button class="btn btn-success btn-xs" data-title="Delete" ng-click="confirmShipping(product)"><span class="glyphicon glyphicon-plane" ></span></button>
+                                    </div>
+                                    <div ng-show="product.shipStatus">Shipped</div>
+                                </td>
+
+                                <!--
+                                <td><a href="mailto:{{person.account}}"><button class="btn btn-primary btn-xs" data-title="Email"><span class="glyphicon glyphicon-envelope" ></span></button></p></a></td>
+                                <td><button class="btn btn-danger btn-xs" data-title="Delete" ng-click="deleteIdol(person)"><span class="glyphicon glyphicon-trash" ></span></button></p></td>
+                                -->
+                            </tr>
+
+                            </tbody>
+
+                        </table>
+                        <!-- The end of the table -->
+
+
+
+                        <div class="clearfix"></div>
+
+
+
+                    </div>
+
+                </div>
+            </div>
+        </div>
+        <!-- End of the Following list Part-->
+
+
+
+    </div>
+
+
+
+    <!-- /.container -->
+
+</div>

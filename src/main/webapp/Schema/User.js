@@ -3,6 +3,8 @@
  */
 var user={
     id:123,
-    name:"Gary"
-
+    name:"Gary",
+    email:"gary@gmail.com",
+    sellerFlag: true,
+    adminFlag: true
 }

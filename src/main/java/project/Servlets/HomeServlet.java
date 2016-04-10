@@ -1,35 +1,29 @@
 package project.Servlets;
 
-import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.List;
 import javax.servlet.ServletException;
-import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import org.json.simple.JSONObject;
-import org.json.simple.parser.JSONParser;
-import org.json.simple.parser.ParseException;
 import org.json.simple.JSONArray;
 import project.Database.DBMS;
 import project.Objects.ProductSelling;
 import project.Serialization.Serializer;
 
-
-public class HomeServlet extends HttpServlet
-{
+public class HomeServlet extends HttpServlet {
     private static final long serialVersionUID = 2L;
     private static DBMS dbms = new DBMS();
     private static Serializer serializer = new Serializer();
     private static final int DEFAULT_NUM_PRODUCTS = 20;
 
-    public HomeServlet(){super();}
+    public HomeServlet() {
+        super();
+    }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
-        throws ServletException, IOException
-    {
+        throws ServletException, IOException {
         List<ProductSelling> productSellingList = dbms.getRecentProducts(DEFAULT_NUM_PRODUCTS);
         JSONArray list = serializer.serializeProductsSelling(productSellingList);
 
@@ -39,8 +33,5 @@ public class HomeServlet extends HttpServlet
         out.write(list.toJSONString());
         out.flush();
         out.close();
-
-
-
     }
 }

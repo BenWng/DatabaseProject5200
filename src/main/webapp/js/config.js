@@ -20,6 +20,21 @@
             .when('/app/login',{
                 templateUrl:'./login.html'
             })
+            .when('/app/registration',{
+                templateUrl:'./registration.html'
+            })
+            .when('/app/administrator',{
+                templateUrl:'./Administrator.html'
+            })
+            .when('/app/shopperprofile',{
+                templateUrl:'./ShopperProfile.html'
+            })
+            .when('/app/sellerprofile',{
+                templateUrl:'./SellerProfile.html'
+            })
+            .when('/app/editor',{
+                templateUrl:'./Editor.html'
+            })
             .otherwise({
                 redirectTo:'/app/home'
             });

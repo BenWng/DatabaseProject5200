@@ -8,5 +8,7 @@ var product={
     longdescription: "long description",
     price: 18,
     owner: 789, //the id of the owner
-    Category:"Food" //the category of the product
+    Category:"Food" ,//the category of the product
+    orderDate:"2007-11-13",
+    shipStatus:true
 }

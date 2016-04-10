@@ -27,7 +27,7 @@ function loginController($scope,$http,$route,UserService,$location){
                     else{
                         UserService.setUser(user);
                         console.log(UserService.returnUser());
-                        $location.path("/home");
+                        $location.path("/app/home");
                     }
                 })
     }
