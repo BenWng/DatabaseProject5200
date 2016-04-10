@@ -1,24 +1,19 @@
 package project.Servlets;
 
-
 import org.apache.commons.lang3.StringUtils;
-import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
 import project.Database.DBMS;
-import project.Objects.ProductSelling;
-import project.Serialization.Serializer;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.List;
 
-public class WishListServlet {
+public class IsPurchasedServlet {
     private static DBMS dbms = new DBMS();
-    private static Serializer serializer = new Serializer();
 
-    public WishListServlet() {
+    public IsPurchasedServlet() {
         super();
     }
 
@@ -27,10 +22,15 @@ public class WishListServlet {
         String URI = request.getRequestURI();
         String[] splitURI = URI.split("/");
 
-        if (splitURI.length == 2 &&
-                StringUtils.isNumeric(splitURI[1])) {
-            List<ProductSelling> wishList = dbms.getWishListByUserId(Integer.parseInt(splitURI[1]));
-            JSONArray obj = serializer.serializeProductsSelling(wishList);
+        if (splitURI.length == 3 &&
+                StringUtils.isNumeric(splitURI[1]) &&
+                StringUtils.isNumeric(splitURI[2])) {
+            int userId = Integer.parseInt(splitURI[2]);
+            int productId = Integer.parseInt(splitURI[1]);
+            boolean productPurchased = dbms.isProductPurchased(userId, productId);
+
+            JSONObject obj = new JSONObject();
+            obj.put("purchasedFlag", productPurchased);
 
             response.setContentType("text/html");
 
@@ -39,7 +39,7 @@ public class WishListServlet {
             out.flush();
             out.close();
         } else {
-            System.out.println("Error: Invalid id in GET wish list");
+            System.out.println("Error: Invalid call to GET products purchased");
         }
     }
 }

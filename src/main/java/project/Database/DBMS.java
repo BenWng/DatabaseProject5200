@@ -181,7 +181,6 @@ public class DBMS {
                 while (shopRS.next()) {
                     shopCategories.add(rs.getString(1));
                 }
-
             }
 
             conn.close();
@@ -229,7 +228,7 @@ public class DBMS {
     public void deleteUser(int userId) {
         try {
             Connection conn = establishConnection();
-            PreparedStatement st = conn.prepareStatement("DELETE FROM Users WHERE uid=  ?");
+            PreparedStatement st = conn.prepareStatement("DELETE FROM Users WHERE id =  ?");
             st.setInt(1, userId);
             st.executeUpdate();
             conn.close();
@@ -245,7 +244,7 @@ public class DBMS {
         String email = u1.getEmail();
         try {
             Connection conn = establishConnection();
-            PreparedStatement st = conn.prepareStatement("UPDATE Users SET name = ? ,email = ? WHERE id = ?");
+            PreparedStatement st = conn.prepareStatement("UPDATE Users SET name = ? , email = ? WHERE id = ?");
             st.setString(1, name);
             st.setString(2, email);
             st.setInt(3, id);
@@ -267,7 +266,7 @@ public class DBMS {
 
         try {
             Connection conn = establishConnection();
-            PreparedStatement st = conn.prepareStatement("Select * from Users where uid = ?");
+            PreparedStatement st = conn.prepareStatement("Select * from Users where id = ?");
             st.setInt(1, id);
             ResultSet rs = st.executeQuery();
             if (!rs.next()) {
@@ -295,7 +294,7 @@ public class DBMS {
         List<ProductSold> products_sold = new ArrayList<>();
         try {
             Connection conn = establishConnection();
-            PreparedStatement st = conn.prepareStatement("SELECT * FROM ProductSold where purchaserId = ?");
+            PreparedStatement st = conn.prepareStatement("SELECT * FROM ProductsSold where purchaserId = ?");
             st.setInt(1, purchaserId);
             ResultSet rs = st.executeQuery();
             while (rs.next()) {
@@ -404,7 +403,7 @@ public class DBMS {
 
         try {
             Connection conn = establishConnection();
-            PreparedStatement st = conn.prepareStatement("UPDATE ProductSelling " +
+            PreparedStatement st = conn.prepareStatement("UPDATE ProductsSelling " +
                     "SET name = ?, price = ?, shortDescription = ?, longDescription = ?, pictureURL = ? " +
                     "category = ? WHERE id = ?");
             st.setString(1, name);
@@ -425,7 +424,7 @@ public class DBMS {
     public void deleteProductSelling(int productId) {
         try {
             Connection conn = establishConnection();
-            PreparedStatement st = conn.prepareStatement("DELETE FROM ProductSelling WHERE id =  ?");
+            PreparedStatement st = conn.prepareStatement("DELETE FROM ProductsSelling WHERE id =  ?");
             st.setInt(1, productId);
             st.executeUpdate();
             conn.close();
@@ -438,7 +437,7 @@ public class DBMS {
     public void purchaseProduct(int productSellingId, int purchaserId) {
         try {
             Connection conn = establishConnection();
-            PreparedStatement st = conn.prepareStatement("SELECT * FROM ProductSelling WHERE id =  ?");
+            PreparedStatement st = conn.prepareStatement("SELECT * FROM ProductsSelling WHERE id =  ?");
             st.setInt(1, productSellingId);
             ResultSet rs1 = st.executeQuery();
             if (rs1.next()) {
@@ -449,12 +448,12 @@ public class DBMS {
                 String picture_url = rs1.getString("pictureURL");
                 int sellerId = rs1.getInt("sellerId");
                 String category = rs1.getString("category");
-                PreparedStatement st1 = conn.prepareStatement("DELETE FROM ProductSelling WHERE id =  ?");
+                PreparedStatement st1 = conn.prepareStatement("DELETE FROM ProductsSelling WHERE id = ?");
                 st1.setInt(1, productSellingId);
                 st1.executeUpdate();
                 int rs = st1.executeUpdate();
                 if (rs > 0) {
-                    PreparedStatement st2 = conn.prepareStatement("INSERT INTO ProductSold " +
+                    PreparedStatement st2 = conn.prepareStatement("INSERT INTO ProductsSold " +
                             "VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
                     st2.setString(1, name);
                     st2.setDouble(2, price);
