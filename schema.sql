@@ -16,7 +16,7 @@ create table CategoryType(
 create table ProductsSold(
   id int primary key auto_increment,
   name varchar(48) not null,
-  price boolean not null,
+  price int not null,
   shortDescription varchar(1000) not null,
   longDescription varchar(1000) not null,
   sellerId int not null,
