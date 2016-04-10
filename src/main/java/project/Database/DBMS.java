@@ -338,30 +338,30 @@ public class DBMS {
             ResultSet rs = st.executeQuery();
             while (rs.next()) {
                 int id = rs.getInt(1);
-		PreparedStatement st1 = conn.prepareStatement("Select * FROM ProductsSelling where id = ?");
-		st.setInt(1, id);
-		ResultSet rs =st.executeQuery();
-		while(rs.next())
-		{
-                	String name = rs.getString(2);
-                	Double price = rs.getDouble(3);
-                	String shortDescription = rs.getString(4);
-                	String longDescription = rs.getString(5);
-                	int sellerId = rs.getInt(6);
-                	String category = rs.getString(7);
-                	String picture_url = rs.getString(8);
-                	ProductSelling p = new ProductSelling(id,
-                        	sellerId,
-                        	name,
-                        	price,
-                        	1,
-                        	shortDescription,
-                        	longDescription,
-                        	picture_url,
-                        	category);
-                	wishlist.add(p);
-			st1.close();
-            }}
+                PreparedStatement st1 = conn.prepareStatement("Select * FROM ProductsSelling where id = ?");
+                st.setInt(1, id);
+                ResultSet rs1 =st.executeQuery();
+	        while (rs1.next()) {
+                    String name = rs1.getString(2);
+                    Double price = rs1.getDouble(3);
+                    String shortDescription = rs1.getString(4);
+                    String longDescription = rs1.getString(5);
+                    int sellerId = rs1.getInt(6);
+                    String category = rs1.getString(7);
+                    String picture_url = rs1.getString(8);
+                    ProductSelling p = new ProductSelling(id,
+                        sellerId,
+                        name,
+                        price,
+                        1,
+                        shortDescription,
+                        longDescription,
+                        picture_url,
+                        category);
+                    wishlist.add(p);
+		    st1.close();
+                }
+            }
             conn.close();
             st.close();
             
