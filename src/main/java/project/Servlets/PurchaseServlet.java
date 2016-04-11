@@ -7,13 +7,14 @@ import project.Objects.ProductSold;
 import project.Serialization.Serializer;
 
 import javax.servlet.ServletException;
+import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.List;
 
-public class PurchaseServlet {
+public class PurchaseServlet extends HttpServlet {
     private static DBMS dbms = new DBMS();
     private static Serializer serializer = new Serializer();
 
@@ -26,9 +27,9 @@ public class PurchaseServlet {
         String URI = request.getRequestURI();
         String[] splitURI = URI.split("/");
 
-        if (splitURI.length == 2 &&
-            StringUtils.isNumeric(splitURI[1])) {
-            int userId = Integer.parseInt(splitURI[1]);
+        if (splitURI.length == 3 &&
+            StringUtils.isNumeric(splitURI[2])) {
+            int userId = Integer.parseInt(splitURI[2]);
             List<ProductSold> purchasedList = dbms.getProductsSoldByPurchaserId(userId);
             JSONArray obj = serializer.serializeProductsSold(purchasedList);
 

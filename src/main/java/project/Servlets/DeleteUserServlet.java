@@ -7,13 +7,14 @@ import project.Objects.User;
 import project.Serialization.Serializer;
 
 import javax.servlet.ServletException;
+import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.List;
 
-public class DeleteUserServlet {
+public class DeleteUserServlet extends HttpServlet {
     private static DBMS dbms = new DBMS();
     private static Serializer serializer = new Serializer();
 
@@ -26,10 +27,10 @@ public class DeleteUserServlet {
         String URI = request.getRequestURI();
         String[] splitURI = URI.split("/");
 
-        if (splitURI.length != 2) {
+        if (splitURI.length != 3) {
             System.out.println("Error: Invalid URI for DELETE user");
         } else {
-            if (StringUtils.isNumeric(splitURI[1])) dbms.deleteUser(Integer.parseInt(splitURI[1]));
+            if (StringUtils.isNumeric(splitURI[2])) dbms.deleteUser(Integer.parseInt(splitURI[2]));
             else System.out.println("Error: Invalid user id for DELETE user");
         }
 

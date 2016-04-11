@@ -17,14 +17,14 @@ public class Deserializer {
     }
 
     public ProductSelling deserializeProductSelling(JSONObject jsonObject) {
-        return new ProductSelling((Integer) jsonObject.get("id"),
-                (Integer) jsonObject.get("owner"),
+        return new ProductSelling(((Long) jsonObject.get("id")).intValue(),
+                ((Long) jsonObject.get("owner")).intValue(),
                 (String) jsonObject.get("name"),
-                (Double) jsonObject.get("price"),
-                (Integer) jsonObject.get("quantity"),
+                Double.parseDouble((String)jsonObject.get("price")),
+                1, // Quantity
                 (String) jsonObject.get("description"),
                 (String) jsonObject.get("longdescription"),
-                (String) jsonObject.get("pictureURL"),
+                null, // Picture URL
                 (String) jsonObject.get("Category"));
     }
 

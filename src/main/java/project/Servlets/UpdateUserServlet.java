@@ -11,6 +11,7 @@ import project.Serialization.Deserializer;
 import project.Serialization.Serializer;
 
 import javax.servlet.ServletException;
+import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.BufferedReader;
@@ -18,10 +19,9 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.List;
 
-public class UpdateUserServlet {
+public class UpdateUserServlet extends HttpServlet {
     private static DBMS dbms = new DBMS();
     private static Serializer serializer = new Serializer();
-    private static Deserializer deserializer = new Deserializer();
 
     public UpdateUserServlet() {
         super();
@@ -32,10 +32,10 @@ public class UpdateUserServlet {
         String URI = request.getRequestURI();
         String[] splitURI = URI.split("/");
 
-        if (splitURI.length != 2) {
+        if (splitURI.length != 3) {
             System.out.println("Error: Invalid URI for PUT user");
         } else {
-            if (StringUtils.isNumeric(splitURI[1])) {
+            if (StringUtils.isNumeric(splitURI[2])) {
                 StringBuffer sb = new StringBuffer();
 
                 try {
@@ -44,7 +44,9 @@ public class UpdateUserServlet {
                     while ((line = reader.readLine()) != null) {
                         sb.append(line);
                     }
-                } catch (Exception e) { e.printStackTrace(); }
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
 
                 JSONParser parser = new JSONParser();
                 JSONObject joUser = null;
@@ -54,7 +56,12 @@ public class UpdateUserServlet {
                     e.printStackTrace();
                 }
 
-                User user = deserializer.deserializeUser(joUser);
+                User user = new User((Integer) joUser.get("id"),
+                        (String) joUser.get("name"),
+                        (String) joUser.get("email"),
+                        null,
+                        false,
+                        false);
                 dbms.updateUser(user);
 
             } else {

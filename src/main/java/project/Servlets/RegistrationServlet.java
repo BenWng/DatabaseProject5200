@@ -5,20 +5,19 @@ import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 import project.Database.DBMS;
 import project.Objects.User;
-import project.Serialization.Deserializer;
 import project.Serialization.Serializer;
 
 import javax.servlet.ServletException;
+import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.PrintWriter;
 
-public class RegistrationServlet {
+public class RegistrationServlet extends HttpServlet {
     private static DBMS dbms = new DBMS();
     private static Serializer serializer = new Serializer();
-    private static Deserializer deserializer = new Deserializer();
 
     public RegistrationServlet(){
         super();
@@ -46,13 +45,17 @@ public class RegistrationServlet {
             e.printStackTrace();
         }
 
-        User user = deserializer.deserializeUser(joUser);
-
+        User user = new User(-1, (String) joUser.get("name"), null, null, false, false);
         JSONObject obj = new JSONObject();
-        if (dbms.addUser(user, (String) joUser.get("password")) == -1) {
-            obj.put("id", -1);
+
+        if (joUser.get("password").equals(joUser.get("confirmPassword"))) {
+            if (dbms.addUser(user, (String) joUser.get("password")) == -1) {
+                obj.put("id", -1);
+            } else {
+                obj = serializer.serializeUser(user);
+            }
         } else {
-            obj = serializer.serializeUser(user);
+            obj.put("id", -1);
         }
 
         response.setContentType("text/html");

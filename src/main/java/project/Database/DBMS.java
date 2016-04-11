@@ -50,7 +50,7 @@ public class DBMS {
 
         return products;
     }
-    
+
     public User getUserByNameAndPassword(String username, String password) {
         try {
             Connection conn = establishConnection();
@@ -179,7 +179,7 @@ public class DBMS {
                 shopSt.setInt(1, sellerId);
                 ResultSet shopRS = shopSt.executeQuery();
                 while (shopRS.next()) {
-                    shopCategories.add(rs.getString(1));
+                    shopCategories.add(shopRS.getString(1));
                 }
             }
 
@@ -203,7 +203,7 @@ public class DBMS {
             Connection conn = establishConnection();
             Statement st = conn.createStatement();
             ResultSet rs = st.executeQuery("SELECT * FROM Users");
-            if(rs.next()) {
+            while (rs.next()) {
                 int id = rs.getInt(1);
                 String email = rs.getString(2);
                 String name = rs.getString(3);
@@ -244,7 +244,7 @@ public class DBMS {
         String email = u1.getEmail();
         try {
             Connection conn = establishConnection();
-            PreparedStatement st = conn.prepareStatement("UPDATE Users SET name = ? , email = ? WHERE id = ?");
+            PreparedStatement st = conn.prepareStatement("UPDATE Users SET name = ?, email = ? WHERE id = ?");
             st.setString(1, name);
             st.setString(2, email);
             st.setInt(3, id);
@@ -266,11 +266,12 @@ public class DBMS {
 
         try {
             Connection conn = establishConnection();
-            PreparedStatement st = conn.prepareStatement("Select * from Users where id = ?");
+            PreparedStatement st = conn.prepareStatement("SELECT * FROM Users WHERE id = ?");
             st.setInt(1, id);
             ResultSet rs = st.executeQuery();
             if (!rs.next()) {
-                PreparedStatement st1 = conn.prepareStatement("INSERT INTO Users values(?, ?, ?, ?, ?, ?, ?)");
+                PreparedStatement st1 = conn.prepareStatement("INSERT INTO Users (email, name, password, " +
+                        "shippingAddress, seller, shopName, admin) VALUES(?, ?, ?, ?, ?, ?, ?)");
                 st1.setString(1, email);
                 st1.setString(2, name);
                 st1.setString(3, password);
@@ -294,7 +295,7 @@ public class DBMS {
         List<ProductSold> products_sold = new ArrayList<>();
         try {
             Connection conn = establishConnection();
-            PreparedStatement st = conn.prepareStatement("SELECT * FROM ProductsSold where purchaserId = ?");
+            PreparedStatement st = conn.prepareStatement("SELECT * FROM ProductsSold WHERE purchaserId = ?");
             st.setInt(1, purchaserId);
             ResultSet rs = st.executeQuery();
             while (rs.next()) {
@@ -333,15 +334,15 @@ public class DBMS {
         List<ProductSelling> wishlist = new ArrayList<>();
         try {
             Connection conn = establishConnection();
-            PreparedStatement st = conn.prepareStatement("SELECT * FROM Wishlist where userId = ?");
+            PreparedStatement st = conn.prepareStatement("SELECT * FROM Wishlist WHERE userId = ?");
             st.setInt(1, userId);
             ResultSet rs = st.executeQuery();
             while (rs.next()) {
-                int id = rs.getInt(1);
-                PreparedStatement st1 = conn.prepareStatement("Select * FROM ProductsSelling where id = ?");
-                st.setInt(1, id);
-                ResultSet rs1 =st.executeQuery();
-	        while (rs1.next()) {
+                int id = rs.getInt("productId");
+                PreparedStatement st1 = conn.prepareStatement("SELECT * FROM ProductsSelling WHERE id = ?");
+                st1.setInt(1, id);
+                ResultSet rs1 = st1.executeQuery();
+                while (rs1.next()) {
                     String name = rs1.getString(2);
                     Double price = rs1.getDouble(3);
                     String shortDescription = rs1.getString(4);
@@ -350,21 +351,21 @@ public class DBMS {
                     String category = rs1.getString(7);
                     String picture_url = rs1.getString(8);
                     ProductSelling p = new ProductSelling(id,
-                        sellerId,
-                        name,
-                        price,
-                        1,
-                        shortDescription,
-                        longDescription,
-                        picture_url,
-                        category);
+                            sellerId,
+                            name,
+                            price,
+                            1,
+                            shortDescription,
+                            longDescription,
+                            picture_url,
+                            category);
                     wishlist.add(p);
-		    st1.close();
                 }
+                st1.close();
             }
             conn.close();
             st.close();
-            
+
         } catch(Exception e) {
             System.out.println(e.getMessage());
         }
@@ -388,7 +389,7 @@ public class DBMS {
     public void addToWishList(int userId, int productSellingId) {
         try {
             Connection conn = establishConnection();
-            PreparedStatement st = conn.prepareStatement("INSERT INTO Wishlist WHERE userId = ? AND productID = ?");
+            PreparedStatement st = conn.prepareStatement("INSERT INTO Wishlist (userId, productId) VALUES (?, ?)");
             st.setInt(1, userId);
             st.setInt(2, productSellingId);
             st.executeUpdate();
@@ -417,9 +418,9 @@ public class DBMS {
             st.setDouble(2, price);
             st.setString(3, shortDescription);
             st.setString(4, longDescription);
-            st.setString(4, pictureURL);
-            st.setString(5, category);
-            st.setInt(6, id);
+            st.setString(5, pictureURL);
+            st.setString(6, category);
+            st.setInt(7, id);
             st.executeUpdate();
             conn.close();
             st.close();
@@ -457,11 +458,11 @@ public class DBMS {
                 String category = rs1.getString("category");
                 PreparedStatement st1 = conn.prepareStatement("DELETE FROM ProductsSelling WHERE id = ?");
                 st1.setInt(1, productSellingId);
-                st1.executeUpdate();
                 int rs = st1.executeUpdate();
                 if (rs > 0) {
                     PreparedStatement st2 = conn.prepareStatement("INSERT INTO ProductsSold " +
-                            "VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+                            "(name, price, shortDescription, longDescription, sellerId, purchaserId, category, " +
+                            "shipped, received, pictureURL) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
                     st2.setString(1, name);
                     st2.setDouble(2, price);
                     st2.setString(3, shortDescription);
