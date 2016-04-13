@@ -18,7 +18,7 @@ public class Serializer {
             obj.put("name", user.getName());
             obj.put("email", user.getEmail());
             //obj.put("shippingAddress", user.getShippingAddress());
-            obj.put("admin", user.isAdmin());
+            obj.put("adminFlag", user.isAdmin());
             obj.put("seller", user.isSeller());
         } else {
             obj.put("id", -1);
@@ -69,13 +69,13 @@ public class Serializer {
         if (productSold != null) {
             obj.put("id", productSold.getId());
             obj.put("name", productSold.getName());
-            obj.put("sellerId", productSold.getSellerId());
+            obj.put("owner", productSold.getSellerId());
             obj.put("price", productSold.getPrice());
             obj.put("description", productSold.getShortDescription());
             obj.put("longdescription", productSold.getFullDescription());
             obj.put("pictureURL", productSold.getPictureURL());
             obj.put("Category", productSold.getCategory());
-            obj.put("shipped", productSold.isShipped());
+            obj.put("shipStatus", productSold.isShipped());
             obj.put("received", productSold.isReceived());
         } else {
             obj.put("id", -1);

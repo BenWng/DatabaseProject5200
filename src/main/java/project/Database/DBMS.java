@@ -161,6 +161,46 @@ public class DBMS {
         return null;
     }
 
+    public ProductSold getProductSoldById(int productId) {
+        try {
+            Connection conn = establishConnection();
+            PreparedStatement st = conn.prepareStatement("SELECT * " +
+                    "FROM ProductsSold ps " +
+                    "WHERE ps.id = ?");
+            st.setInt(1, productId);
+            ResultSet rs = st.executeQuery();
+            if(rs.next()) {
+                int id =  rs.getInt(1);
+                String name =  rs.getString(2);
+                Double price =  rs.getDouble(3);
+                String shortDescription =  rs.getString(4);
+                String longDescription = rs.getString(5);
+                int sellerId = rs.getInt(6);
+                int purchaserId = rs.getInt(7);
+                String pCategory = rs.getString(8);
+                int quantity =  rs.getInt(9);
+                String pictureURL =  rs.getString(10);
+                return new ProductSold(id,
+                        sellerId,
+                        purchaserId,
+                        name,
+                        price,
+                        shortDescription,
+                        longDescription,
+                        pictureURL,
+                        pCategory,
+                        false,
+                        false);
+            }
+
+            conn.close();
+        } catch(Exception e) {
+            System.out.println(e.getMessage());
+        }
+
+        return null;
+    }
+
     public Shop getShopBySellerId(int sellerId) {
         try {
             Connection conn = establishConnection();
@@ -257,7 +297,6 @@ public class DBMS {
     }
 
     public int addUser(User u1, String password) {
-        int id = u1.getId();
         int to_return = -1;
         String name = u1.getName();
         String email = u1.getEmail();
@@ -266,8 +305,9 @@ public class DBMS {
 
         try {
             Connection conn = establishConnection();
-            PreparedStatement st = conn.prepareStatement("SELECT * FROM Users WHERE id = ?");
-            st.setInt(1, id);
+            PreparedStatement st = conn.prepareStatement("SELECT * FROM Users WHERE name = ? AND password = ?");
+            st.setString(1, name);
+            st.setString(2, password);
             ResultSet rs = st.executeQuery();
             if (!rs.next()) {
                 PreparedStatement st1 = conn.prepareStatement("INSERT INTO Users (email, name, password, " +
@@ -280,8 +320,15 @@ public class DBMS {
                 st1.setString(6, "Default name");
                 st1.setBoolean(7, admin);
                 st1.executeUpdate();
-                to_return = 0;
                 st1.close();
+
+                PreparedStatement st2 = conn.prepareStatement("SELECT * FROM Users WHERE name = ? AND password = ?");
+                st2.setString(1, name);
+                st2.setString(2, password);
+                ResultSet rs2 = st2.executeQuery();
+                if (rs2.next()) to_return = rs2.getInt("id");
+            } else {
+                to_return = rs.getInt("id");
             }
             conn.close();
             st.close();
@@ -305,6 +352,68 @@ public class DBMS {
                 String shortDescription = rs.getString(4);
                 String longDescription = rs.getString(5);
                 int sellerId = rs.getInt(6);
+                String category = rs.getString(8);
+                boolean shipped = rs.getBoolean(9);
+                boolean received = rs.getBoolean(10);
+                String picture_url = rs.getString(11);
+                ProductSold p = new ProductSold(id,
+                        sellerId,
+                        purchaserId,
+                        name,
+                        price,
+                        shortDescription,
+                        longDescription,
+                        picture_url,
+                        category,
+                        shipped,
+                        received);
+                products_sold.add(p);
+            }
+            conn.close();
+            st.close();
+        } catch(Exception e) {
+            System.out.println(e.getMessage());
+        }
+        return products_sold;
+    }
+
+    public int updateShippedOnProductsSoldById(int productId) {
+        int ret = -1;
+        try {
+            Connection conn = establishConnection();
+            PreparedStatement st = conn.prepareStatement("SELECT shipped, sellerId " +
+                    "FROM ProductsSold WHERE id = ?");
+            st.setInt(1, productId);
+            ResultSet rs = st.executeQuery();
+            if (rs.next()) {
+                ret = rs.getInt(2);
+                if (rs.getBoolean(1)) return ret;
+                PreparedStatement st1 = conn.prepareStatement("UPDATE ProductsSold SET shipped = ? WHERE id = ?");
+                st1.setBoolean(1, true);
+                st1.setInt(2, productId);
+                st1.executeUpdate();
+            }
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+
+        return ret;
+    }
+
+    public List<ProductSold> getProductsSoldBySellerId(int sellerId) {
+        List<ProductSold> products_sold = new ArrayList<>();
+        try {
+            Connection conn = establishConnection();
+            PreparedStatement st = conn.prepareStatement("SELECT * FROM ProductsSold WHERE sellerId = ?");
+            st.setInt(1, sellerId);
+            ResultSet rs = st.executeQuery();
+            while (rs.next()) {
+                int id = rs.getInt(1);
+                String name = rs.getString(2);
+                Double price = rs.getDouble(3);
+                String shortDescription = rs.getString(4);
+                String longDescription = rs.getString(5);
+                int purchaserId = rs.getInt(7);
                 String category = rs.getString(8);
                 boolean shipped = rs.getBoolean(9);
                 boolean received = rs.getBoolean(10);
@@ -412,7 +521,7 @@ public class DBMS {
         try {
             Connection conn = establishConnection();
             PreparedStatement st = conn.prepareStatement("UPDATE ProductsSelling " +
-                    "SET name = ?, price = ?, shortDescription = ?, longDescription = ?, pictureURL = ? " +
+                    "SET name = ?, price = ?, shortDescription = ?, longDescription = ?, pictureURL = ?, " +
                     "category = ? WHERE id = ?");
             st.setString(1, name);
             st.setDouble(2, price);

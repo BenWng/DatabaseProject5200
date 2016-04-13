@@ -45,17 +45,16 @@ public class RegistrationServlet extends HttpServlet {
             e.printStackTrace();
         }
 
-        User user = new User(-1, (String) joUser.get("name"), null, null, false, false);
+        User user = new User(-1, (String) joUser.get("name"), "none@email.com", "None", false, false);
         JSONObject obj = new JSONObject();
 
-        if (joUser.get("password").equals(joUser.get("confirmPassword"))) {
-            if (dbms.addUser(user, (String) joUser.get("password")) == -1) {
-                obj.put("id", -1);
-            } else {
-                obj = serializer.serializeUser(user);
-            }
-        } else {
+        int userId = dbms.addUser(user, (String) joUser.get("password"));
+
+        if (userId == -1) {
             obj.put("id", -1);
+        } else {
+            user.setId(userId);
+            obj = serializer.serializeUser(user);
         }
 
         response.setContentType("text/html");

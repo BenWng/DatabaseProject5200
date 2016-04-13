@@ -33,7 +33,7 @@
     </servlet>
     <servlet-mapping>
         <servlet-name>deleteUser</servlet-name>
-        <url-pattern>/deleteUser/*</url-pattern>
+        <url-pattern>/deleteuser/*</url-pattern>
     </servlet-mapping>
 
     <servlet>
@@ -42,7 +42,7 @@
     </servlet>
     <servlet-mapping>
         <servlet-name>updateUser</servlet-name>
-        <url-pattern>/updateUser/*</url-pattern>
+        <url-pattern>/updateuser/*</url-pattern>
     </servlet-mapping>
 
     <servlet>
@@ -160,5 +160,23 @@
     <servlet-mapping>
         <servlet-name>deleteProduct</servlet-name>
         <url-pattern>/deletePost/*</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>mySoldProducts</servlet-name>
+        <servlet-class>project.Servlets.SoldProductsServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>mySoldProducts</servlet-name>
+        <url-pattern>/mySoldProducts/*</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>confirmShipped</servlet-name>
+        <servlet-class>project.Servlets.ConfirmShippingServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>confirmShipped</servlet-name>
+        <url-pattern>/confirmShipping/*</url-pattern>
     </servlet-mapping>
 </web-app>

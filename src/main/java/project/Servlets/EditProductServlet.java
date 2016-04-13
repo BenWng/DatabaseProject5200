@@ -51,8 +51,6 @@ public class EditProductServlet extends HttpServlet {
                 e.printStackTrace();
             }
 
-            System.out.println(joProduct.toJSONString());
-
             ProductSelling productSelling = deserializer.deserializeProductSelling(joProduct);
             dbms.updateProductSelling(productSelling);
         } else {

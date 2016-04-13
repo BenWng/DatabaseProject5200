@@ -24,7 +24,7 @@ public class Deserializer {
                 1, // Quantity
                 (String) jsonObject.get("description"),
                 (String) jsonObject.get("longdescription"),
-                null, // Picture URL
+                "path", // Picture URL
                 (String) jsonObject.get("Category"));
     }
 
@@ -33,7 +33,7 @@ public class Deserializer {
                 (Integer) jsonObject.get("sellerId"),
                 (Integer) jsonObject.get("purchaserId"),
                 (String) jsonObject.get("name"),
-                (Double) jsonObject.get("price"),
+                Double.parseDouble((String) jsonObject.get("price")),
                 (String) jsonObject.get("description"),
                 (String) jsonObject.get("longdescription"),
                 (String) jsonObject.get("pictureURL"),

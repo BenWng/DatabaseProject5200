@@ -11,6 +11,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.json.simple.JSONObject;
 import project.Database.DBMS;
 import project.Objects.ProductSelling;
+import project.Objects.ProductSold;
 import project.Serialization.Serializer;
 
 public class SingleProductServlet extends HttpServlet {
@@ -27,15 +28,22 @@ public class SingleProductServlet extends HttpServlet {
         String productID = request.getParameter("productID");
         int id = -1;
 
-        if (productID != null ||
-                !productID.isEmpty() ||
+        if (productID != null &&
+                !productID.isEmpty() &&
                 StringUtils.isNumeric(productID)) {
             id = Integer.parseInt(productID);
         }
         response.setContentType("text/html");
 
         ProductSelling productSelling = dbms.getProductSellingById(id);
-        JSONObject obj = serializer.serializeProductSelling(productSelling);
+        ProductSold productSold;
+        JSONObject obj;
+        if (productSelling == null) {
+            productSold = dbms.getProductSoldById(id);
+            obj = serializer.serializeProductSold(productSold);
+        } else {
+            obj = serializer.serializeProductSelling(productSelling);
+        }
 
         PrintWriter out = response.getWriter();
         out.write(obj.toJSONString());

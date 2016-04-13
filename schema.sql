@@ -22,11 +22,11 @@ create table ProductsSold(
   sellerId int not null,
   foreign key (sellerId) references Users(id)
   on update cascade
-  on delete no action,
+  on delete cascade,
   purchaserId int not null,
   foreign key (purchaserId) references Users(id)
   on update cascade
-  on delete no action,
+  on delete cascade,
   category varchar(48),
   foreign key (category) references CategoryType(name)
   on update cascade
@@ -45,7 +45,7 @@ create table ProductsSelling(
   sellerId int not null,
   foreign key (sellerId) references Users(id)
   on update cascade
-  on delete no action,
+  on delete cascade,
   category varchar(48),
   foreign key (category) references CategoryType(name)
   on update cascade

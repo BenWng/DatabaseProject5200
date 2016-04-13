@@ -56,7 +56,7 @@ public class UpdateUserServlet extends HttpServlet {
                     e.printStackTrace();
                 }
 
-                User user = new User((Integer) joUser.get("id"),
+                User user = new User(Integer.parseInt(splitURI[2]),
                         (String) joUser.get("name"),
                         (String) joUser.get("email"),
                         null,
